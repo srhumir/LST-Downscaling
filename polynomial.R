@@ -22,7 +22,8 @@ for (i in 1:(length(intervals)-1)){
 }
 colnames(HotEdgepixels) <- c("NDVI", "LST")
 ####Fit polynomial to hot edge
+x <- HotEdgepixels$NDVI
+y <- HotEdgepixels$LST
 pol <- lm(y ~ x + I(x^2))
-
+residuals <- pol$coefficients[1] + pol$coefficients[2] * NDVIMODIS + pol$coefficients[3]* NDVIMODIS * NDVIMODIS
 ##3. Compute residuals using all data
-
