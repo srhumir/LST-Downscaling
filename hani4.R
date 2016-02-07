@@ -1,3 +1,4 @@
+
 #http://datascienceplus.com/fitting-neural-network-in-r/
 set.seed(500)
 library(MASS)
