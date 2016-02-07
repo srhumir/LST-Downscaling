@@ -25,5 +25,18 @@ colnames(HotEdgepixels) <- c("NDVI", "LST")
 x <- HotEdgepixels$NDVI
 y <- HotEdgepixels$LST
 pol <- lm(y ~ x + I(x^2))
-residuals <- pol$coefficients[1] + pol$coefficients[2] * NDVIMODIS + pol$coefficients[3]* NDVIMODIS * NDVIMODIS
 ##3. Compute residuals using all data
+residuals <- pol$coefficients[1] + pol$coefficients[2] * NDVIMODIS + pol$coefficients[3]* NDVIMODIS * NDVIMODIS
+
+
+#preparing data for neural network. i.e. a table of 10 clumns.
+# first nine residuals of a pixel and its surronding pixels the tenth LST of the pixesl
+##9 rasters to extract NDVI
+reslist <- list()
+for (i in 1:9){
+       matrix <- matrix(0,3,3)
+       matrix[i] <- 1
+       reslist[i] <- focal(residuals,matrix, mean)
+}
+reslist[10] <- LSTMODIS
+forNN <- as.data.frame(brick(reslist))
