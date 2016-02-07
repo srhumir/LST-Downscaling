@@ -36,7 +36,12 @@ reslist <- list()
 for (i in 1:9){
        matrix <- matrix(0,3,3)
        matrix[i] <- 1
-       reslist[i] <- focal(residuals,matrix, mean)
+       reslist[i] <- focal(residuals,matrix, mean, na.rm = TRUE)
 }
 reslist[10] <- LSTMODIS
 forNN <- as.data.frame(brick(reslist))
+for (i in 1:9){
+       names(forNN)[i] <- paste("NDVI", as.character(i), sep = "")
+}
+names(forNN)[10] <- "LST"
+
