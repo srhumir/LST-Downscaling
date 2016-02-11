@@ -1,10 +1,12 @@
 
 library(raster)
 ##1. Input data
-x <- matrix(rnorm(400), 20)
-y<- matrix(rnorm(400), 20)
-NDVIMODIS <- raster(x)
-LSTMODIS <- raster(y)
+#x <- matrix(rnorm(400), 20)
+#y<- matrix(rnorm(400), 20)
+print("chosse NDVI of MODIS of resolution equal to LST")
+NDVIMODIS <- raster(file.choose())
+print("choose LST of MODIS")
+LSTMODIS <- raster(file.choose())
 z <- brick(NDVIMODIS,LSTMODIS)
 ##2. Compute polynomial to estimate LST from NDVI
 ###2.1. Get hot edge pixels
@@ -30,18 +32,18 @@ residuals <- pol$coefficients[1] + pol$coefficients[2] * NDVIMODIS + pol$coeffic
 
 
 #preparing data for neural network. i.e. a table of 10 clumns.
-# first nine residuals of a pixel and its surronding pixels the tenth LST of the pixesl
+# first nine residuals of a pixel and its surronding pixels 
+#the tenth: LST of the pixels
 ##9 rasters to extract NDVI
 reslist <- list()
 for (i in 1:9){
        matrix <- matrix(0,3,3)
        matrix[i] <- 1
-       reslist[i] <- focal(residuals,matrix, mean, na.rm = TRUE)
+       #print(matrix)
+       reslist[i] <- focal(residuals,matrix, mean, na.rm = FALSE)
 }
 reslist[10] <- LSTMODIS
 forNN <- as.data.frame(brick(reslist))
-for (i in 1:9){
-       names(forNN)[i] <- paste("NDVI", as.character(i), sep = "")
-}
+names(forNN) <- sapply(1:9, function(i) paste("NDVI", as.character(i), sep = ""))
 names(forNN)[10] <- "LST"
 
