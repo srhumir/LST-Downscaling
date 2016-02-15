@@ -16,6 +16,18 @@ y <- getValues(SPOTNDVI240)[index]
 x<- getValues(MODISNDVI240)[index]
 lm <- lm(y ~ x)
 rm(list = c("x","y")) 
+
+##read spotndvi and surrondings
+##make a data.table which keep the spotndvi of each pixels and all of
+##its surrondings. NDVI5 is the pixel. 
+##then you shoud convert NDVIs to MODIS NDVI and finally LST.
+##kepping surrondings is to use in NN
+## to save memory, just unique values are saved. Converting it back to raster
+##is another chalenge.
+
+enter here the codes you have written on paper
+
+
 ##convert SPOT NDVI to MODIs environment
 SPOTNDVI15dt <- data.table(SPOTNDVI = unique(round(getValues(SPOTNDVI15,  row = 1), digits = 2)))
 for (i in 2:16648){
@@ -44,6 +56,9 @@ SPOTNDVI15dt[, NDVIMODIS := lm$coefficients[1] + lm$coefficients[2] * SPOTNDVI]
 ##Compute LST using pol
 SPOTNDVI15dt[, LST_ := pol$coefficients[1] + pol$coefficients[2] * NDVIMODIS +
              pol$coefficients[3]* NDVIMODIS^2]
+##produce a tif file
+focal(SPOTNDVI15)
+
 
 
 

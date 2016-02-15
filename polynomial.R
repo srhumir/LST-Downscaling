@@ -44,7 +44,7 @@ residuals <- pol$coefficients[1] + pol$coefficients[2] * NDVIMODIS +
 # first nine residuals of a pixel and its surronding pixels 
 #the tenth: LST of the pixels
 ##9 rasters to extract NDVI
-forNN <- as.data.frame(getValuesFocal(residuals,ngb = 3))
+forNN <- as.data.frame(getValuesFocal(NDVIMODIS,ngb = 3))
 names(forNN) <- sapply(1:9, function(i) paste("NDVI", as.character(i), sep = ""))
 forNN$LSTResiduals <- getValues(residuals)
 forNN <- subset(forNN, NDVI5 >= 0.15)
