@@ -15,14 +15,34 @@ index  <- complete.cases(getValues(MODISNDVI240), getValues(SPOTNDVI240))
 y <- getValues(SPOTNDVI240)[index]
 x<- getValues(MODISNDVI240)[index]
 lm <- lm(y ~ x)
+rm(list = c("x","y")) 
 ##convert SPOT NDVI to MODIs environment
+SPOTNDVI15dt <- data.table(SPOTNDVI = unique(round(getValues(SPOTNDVI15,  row = 1), digits = 2)))
+for (i in 2:16648){
+      SPOTNDVI15dt <- data.table(SPOTNDVI = unique(c(SPOTNDVI15dt$SPOTNDVI, 
+                                                      round(getValues(SPOTNDVI15,  row = i), digits = 2))))
+      print(paste(as.character((i*100/16648)),"%"))
+}
+
+##this one shoud be faster becaus is multicore
+#library(multicore)
+#l <- mclapply(1:nrows(SPOTNDVI15), function(i) 
+#              { data.table(SPOTNDVI = unique(round(getValues(SPOTNDVI15,  row = i), digits = 2)))
+#              })
+
+
+
+SPOTNDVI15dt <- data.table(SPOTNDVI = getValues(SPOTNDVI15, ))
 SPOTNDVI15MODIS <- lm$coefficients[1] + lm$coefficients[2] * SPOTNDVI15
 
-
+##This system works for NDVI >= 0.15. So we remove smaller NDVIs and work with data table for speed.
+SPOTNDVI15MODISdt  
 ##Now by the polynomial computed in Polynomial.R, convert SPOTNDVI to LST. It will be later meke better 
 ##by NN
+NDVISPOTdt <- data.table(NDVI = unique(round(getValues(SPOTNDVI15MODIS), digits = 1)))
+
 SPOTLST_ <- pol$coefficients[1] + pol$coefficients[2] * SPOTNDVI15MODIS +
-  pol$coefficients[3]* SPOTNDVI15MODIS * SPOTNDVI15MODIS 
+  pol$coefficients[3]* SPOTNDVI15MODIS^2
 writeRaster(SPOTLST_, filename = "SPOTLSTbeforeNN.tif")
 
 
