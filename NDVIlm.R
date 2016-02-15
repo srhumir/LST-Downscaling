@@ -32,14 +32,20 @@ for (i in 2:16648){
 
 
 
-SPOTNDVI15dt <- data.table(SPOTNDVI = getValues(SPOTNDVI15, ))
-SPOTNDVI15MODIS <- lm$coefficients[1] + lm$coefficients[2] * SPOTNDVI15
+#SPOTNDVI15dt <- data.table(SPOTNDVI = getValues(SPOTNDVI15, ))
+#SPOTNDVI15MODIS <- lm$coefficients[1] + lm$coefficients[2] * SPOTNDVI15
 
 ##This system works for NDVI >= 0.15. So we remove smaller NDVIs and work with data table for speed.
-SPOTNDVI15MODISdt  
-##Now by the polynomial computed in Polynomial.R, convert SPOTNDVI to LST. It will be later meke better 
-##by NN
-NDVISPOTdt <- data.table(NDVI = unique(round(getValues(SPOTNDVI15MODIS), digits = 1)))
+  
+
+
+##convert to MODIS environment
+SPOTNDVI15dt[, NDVIMODIS := lm$coefficients[1] + lm$coefficients[2] * SPOTNDVI]
+##Compute LST using pol
+SPOTNDVI15dt[, LST_ := pol$coefficients[1] + pol$coefficients[2] * NDVIMODIS +
+             pol$coefficients[3]* NDVIMODIS^2]
+
+
 
 SPOTLST_ <- pol$coefficients[1] + pol$coefficients[2] * SPOTNDVI15MODIS +
   pol$coefficients[3]* SPOTNDVI15MODIS^2
