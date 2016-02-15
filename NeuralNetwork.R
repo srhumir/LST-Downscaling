@@ -17,7 +17,7 @@ scaled <- as.data.frame(scale(forNN, center = mins, scale = maxs - mins))
 train_ <- scaled[index,]
 test_ <- scaled[-index,]
 n <- names(train_)
-f <- as.formula(paste("LST ~", paste(n[!n %in% "LST"], collapse = " + ")))
+f <- as.formula(paste("LSTResiduals ~", paste(n[!n %in% "LSTResiduals"], collapse = " + ")))
 
 nn <- neuralnet(f,data=train_,hidden=c(5,3),linear.output=T)
 
