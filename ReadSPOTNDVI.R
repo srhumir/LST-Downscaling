@@ -38,7 +38,7 @@ for (j in 2:(nrow(SPOTNDVI15)+1)){
         percent <- floor((j*100)/nrow(SPOTNDVI15))
         percentold <- floor(((j-1)*100)/nrow(SPOTNDVI15))
         if (percent > percentold){
-                print(paste(as.character(percentold), "%"))
+                print(paste(as.character(percent), "%"))
         }
 }
 SPOTNDVI15dt
