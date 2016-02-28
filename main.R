@@ -22,5 +22,7 @@ lm <- Spot2Modis(SPOTNDVI240, MODISNDVI240)
 
 max <- maxValue(SPOTNDVI15)
 min <- minValue(SPOTNDVI15)
-LSTSPOT <- focal(SPOTNDVI15, matrix(1,3,3), function(x) convert(x, min = min, max = max, nn = nn, lm = lm, pol = pol), filename = "SPOTLST")
+LSTSPOT <- focal(SPOTNDVI15, matrix(1,3,3), 
+                 function(x) convert(x, min = min, max = max, nn = nn, lm = lm, pol = pol), 
+                 filename = "SPOTLST.tif", progress = "=")
 

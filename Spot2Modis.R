@@ -4,11 +4,12 @@
 Spot2Modis <- function(SPOTNDVI240, MODISNDVI240){
        ##crop MODIS by raster to have same dimenstion for linear model to be computable
        MODISNDVI240 <- crop(MODISNDVI240, SPOTNDVI240)
+       SPOTNDVI240 <- crop(SPOTNDVI240, MODISNDVI240)
        ##omit NA value
        index  <- complete.cases(getValues(MODISNDVI240), getValues(SPOTNDVI240))
        ##make linear model between MODIS NDVI and SPOT NDVI
        y <- getValues(SPOTNDVI240)[index]
-       x<- getValues(MODISNDVI240)[index]
+       x <- getValues(MODISNDVI240)[index]
        lm <- lm(y ~ x)
        lm       
 }

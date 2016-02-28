@@ -3,6 +3,7 @@
 ##SpotNDVI to Modis environment using lm. Then convert NDVI to LST using pol.
 ##finally ise nn to add residuals.
 convert <- function(SpotNDVI, min, max, nn, lm, pol){
+       SpotNDVI <- as.vector(SpotNDVI)
        if (is.na(SpotNDVI[5]) | SpotNDVI[5] < .15) return(NA)
        #to modis environment
        modisLike <- lm$coefficients[1] + lm$coefficients[2] * SpotNDVI 
@@ -12,6 +13,6 @@ convert <- function(SpotNDVI, min, max, nn, lm, pol){
        #start nn. scale the modislike
        scaled <- scale(modisLike, center = min, scale = max - min)
        #run nn
-       residual <- compute(nn,modisLike)
+       residual <- compute(nn,t(as.data.frame(modisLike)))$net.result
        lst + (residual*(max - min) + min)
 }
