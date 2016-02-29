@@ -6,7 +6,7 @@ nn <- function(forNN){
        #omit NA because NN can not work with NA
        forNN <- forNN[complete.cases(forNN),]
        set.seed(300)
-       apply(forNN,2,function(x) sum(is.na(x)))
+       print(apply(forNN,2,function(x) sum(is.na(x))))
        index <- sample(1:nrow(forNN),round(0.75*nrow(forNN)))
        train <- forNN[index,]
        test <- forNN[-index,]

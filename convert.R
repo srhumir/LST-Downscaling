@@ -4,12 +4,12 @@
 ##finally ise nn to add residuals.
 convert <- function(SpotNDVI, min, max, nn, lm, pol){
        SpotNDVI <- as.vector(SpotNDVI)
-       if (is.na(SpotNDVI[5]) | SpotNDVI[5] < .15) return(NA)
-       #to modis environment
        modisLike <- lm$coefficients[1] + lm$coefficients[2] * SpotNDVI 
+       if (is.na(modisLike[5])) return(NA)
+       #to modis environment
        #to lst
-       lst <- pol$coefficients[1] + pol$coefficients[2] * modisLike[5] +
-              pol$coefficients[3]* modisLike[5]^2
+       lst <- pol$coefficients[1] + pol$coefficients[2] * modisLike[5] 
+#+              pol$coefficients[3]* modisLike[5]^2
        #start nn. scale the modislike
        scaled <- scale(modisLike, center = min, scale = max - min)
        #run nn
