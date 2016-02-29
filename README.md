@@ -1,6 +1,5 @@
 # LST-Downscaling
-We would like to downscale the LST acquired using MODIS to the resolution of SPOT.
-
+We would like to downscale the LST acquired using MODIS to the resolution of SPOT. This method can be used for LST downscaling of other sensors too.
 
 We do this based on NDVI. Pracctically we will convert NDVI to LST. This job is done in several steps.
 
@@ -19,4 +18,4 @@ The files mainley contain functions doing steps above. main.R uses the functions
 - NeuralNetwork.R Design, train and test a neural network to get NDVI of nine pixels and estimate the residual.
 - Spot2Modis.R Prepare a linear model to convert SPOT NDVI to MODIS NDVI
 - convert.R Get 9 SPOT NDVI values. Assuming that the 5th one is for the pixe and others are for its surrondings. Convert it to LST by the linear model and enhance it by the residual which can be computed using the neural network.
--main.R Input the data. Run the functions in order with suitable data. Finally is a focal on the high resolution SPOT NDVI and convert it to LST using convert function.
+-main.R Input the data. Run the functions in order with suitable data. Finally uses a focal on the high resolution SPOT NDVI and convert it to LST using convert function.
