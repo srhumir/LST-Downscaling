@@ -25,8 +25,12 @@ percentfocal <- 0
 ncell <- ncell(SPOTNDVI15)
 max <- maxValue(SPOTNDVI15)
 min <- minValue(SPOTNDVI15)
+maxLST <- maxValue(LSTMODIS)
+minLST <- minValue(LSTMODIS)
 LSTSPOT <- focal(SPOTNDVI15, matrix(1,3,3), 
-                 function(x) convert(x, min = min, max = max, nn = nn, lm = lm, pol = pol, ncell = ncell), 
+                 function(x) convert(x, min = min, max = max, minLST = minLST,
+                                     maxLST = maxLST, nn = nn, lm = lm, pol = pol,
+                                     ncell = ncell), 
                  filename = "SPOTLSTlm.tif", progress = "=")
 
 
