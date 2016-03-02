@@ -1,5 +1,6 @@
 #library(data.table)
 library(raster)
+library(data.table)
 print("chosse NDVI of MODIS of resolution equal to LST")
 NDVIMODIS <- raster(file.choose())
 print("choose LST of MODIS")
@@ -20,10 +21,12 @@ nn <- nn(forNN)
 
 lm <- Spot2Modis(SPOTNDVI240, MODISNDVI240)
 
+percentfocal <- 0
+ncell <- ncell(SPOTNDVI15)
 max <- maxValue(SPOTNDVI15)
 min <- minValue(SPOTNDVI15)
 LSTSPOT <- focal(SPOTNDVI15, matrix(1,3,3), 
-                 function(x) convert(x, min = min, max = max, nn = nn, lm = lm, pol = pol), 
+                 function(x) convert(x, min = min, max = max, nn = nn, lm = lm, pol = pol, ncell = ncell), 
                  filename = "SPOTLSTlm.tif", progress = "=")
 
 

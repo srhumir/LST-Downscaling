@@ -1,6 +1,9 @@
 # LST-Downscaling
 We would like to downscale the LST acquired using MODIS to the resolution of SPOT. This method can be used for LST downscaling of other sensors too.
 
+This work is based on the paper
+- 
+
 We do this based on NDVI. Pracctically we will convert NDVI to LST. This job is done in several steps.
 
 1. Find a linear relationship between NDVI and LST of MODIS hust using "hot edge" pixels.

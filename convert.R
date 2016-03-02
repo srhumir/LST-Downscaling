@@ -2,10 +2,15 @@
 ##Get nine values of focal. Reaturn NA is the NDVI is NA or <.15. Otherwise convert
 ##SpotNDVI to Modis environment using lm. Then convert NDVI to LST using pol.
 ##finally ise nn to add residuals.
-convert <- function(SpotNDVI, min, max, nn, lm, pol){
+convert <- function(SpotNDVI, min, max, nn, lm, pol, ncell){
+       percentfocal <<- percentfocal +1
+       #print(percentfocal)
+       if (floor(percentfocal*100/ncell) > ((percentfocal-1)*100/ncell)){
+              print(paste(floor(percentfocal*100/ncell),"%"))
+       }
        SpotNDVI <- as.vector(SpotNDVI)
+       if (is.na(SpotNDVI[5]) | SpotNDVI[5] < .03) return(NA)
        modisLike <- lm$coefficients[1] + lm$coefficients[2] * SpotNDVI 
-       if (is.na(modisLike[5])) return(NA)
        #to modis environment
        #to lst
        lst <- pol$coefficients[1] + pol$coefficients[2] * modisLike[5] 
