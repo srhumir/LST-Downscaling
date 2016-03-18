@@ -1,7 +1,7 @@
 # LST-Downscaling
 We would like to downscale the LST acquired using MODIS to the resolution of SPOT. This method can be used for LST downscaling of other sensors too.
 
-This work is based on the paper
+This work is based on
 V.M. Bindhu, B. Narasimhan1, K.P. Sudheer, Development and verification of a non-linear disaggregation method (NL-DisTrad) to downscale MODIS land surface temperature to the spatial scale of Landsat thermal data to estimate evapotranspiration, Remote Sensing of Environment, 135, August 2013, pp 118-129.
 - 
 
@@ -22,5 +22,5 @@ The files mainley contain functions doing steps above. main.R uses the functions
 - NeuralNetwork.R Design, train and test a neural network to get NDVI of nine pixels and estimate the residual.
 - Spot2Modis.R Prepare a linear model to convert SPOT NDVI to MODIS NDVI
 - convert.R Get 9 SPOT NDVI values. Assuming that the 5th one is for the pixe and others are for its surrondings. Convert it to LST by the linear model and enhance it by the residual which can be computed using the neural network.
--main.R Input the data. Run the functions in order with suitable data. Finally uses a focal on the high resolution SPOT NDVI and convert it to LST using convert function.
--mainParallel.R does the same as main.R using all but one cores of the system.
+- main.R Input the data. Run the functions in order with suitable data. Finally uses a focal on the high resolution SPOT NDVI and convert it to LST using convert function.
+- mainParallel.R does the same as main.R using all but one cores of the system.
