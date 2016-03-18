@@ -3,7 +3,6 @@ We would like to downscale the LST acquired using MODIS to the resolution of SPO
 
 This work is based on
 V.M. Bindhu, B. Narasimhan1, K.P. Sudheer, Development and verification of a non-linear disaggregation method (NL-DisTrad) to downscale MODIS land surface temperature to the spatial scale of Landsat thermal data to estimate evapotranspiration, Remote Sensing of Environment, 135, August 2013, pp 118-129.
-- 
 
 We do this based on NDVI. Pracctically we will convert NDVI to LST. This job is done in several steps.
 
